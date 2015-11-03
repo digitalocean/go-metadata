@@ -129,6 +129,43 @@ func TestNameservers(t *testing.T) {
 	})
 }
 
+func TestFloatingIPv4Active(t *testing.T) {
+	tests := []struct {
+		resp string
+		want bool
+	}{
+		{
+			resp: "true",
+			want: true,
+		},
+		{
+			resp: "false",
+			want: false,
+		},
+		{
+			resp: "",
+			want: false,
+		},
+		{
+			resp: "something stange",
+			want: false,
+		},
+	}
+
+	for _, test := range tests {
+		withServer(t, "/metadata/v1/floating_ip/ipv4/active", test.resp, func(client *Client) {
+			got, err := client.FloatingIPv4Active()
+			if err != nil {
+				t.Fatal(err)
+			}
+			if !reflect.DeepEqual(test.want, got) {
+				t.Errorf("want=%#v", test.want)
+				t.Errorf(" got=%#v", got)
+			}
+		})
+	}
+}
+
 func TestMetadata(t *testing.T) {
 	resp := `{
   "droplet_id": 7473395,
@@ -143,6 +180,11 @@ func TestMetadata(t *testing.T) {
   "interfaces": {
     "public": [
       {
+        "anchor_ipv4": {
+          "gateway": "192.168.0.1",
+          "netmask": "255.255.0.0",
+          "ip_address": "192.168.0.100"
+        },
         "ipv4": {
           "ip_address": "192.168.0.100",
           "netmask": "255.255.240.0",
@@ -163,6 +205,12 @@ func TestMetadata(t *testing.T) {
       "8.8.8.8",
       "8.8.4.4"
     ]
+  },
+  "floating_ip": {
+    "ipv4": {
+      "ip_address": "192.168.0.100",
+      "active": true
+    }
   }
 }`
 
