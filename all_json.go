@@ -27,5 +27,18 @@ type Metadata struct {
 			CIDR      int    `json:"cidr,omitempty"`
 			Gateway   string `json:"gateway,omitempty"`
 		} `json:"ipv6,omitempty"`
+
+		AnchorIPv4 *struct {
+			IPAddress string `json:"ip_address,omitempty"`
+			Netmask   string `json:"netmask,omitempty"`
+			Gateway   string `json:"gateway,omitempty"`
+		} `json:"anchor_ipv4,omitempty"`
 	} `json:"interfaces,omitempty"`
+
+	FloatingIP struct {
+		IPv4 struct {
+			IPAddress string `json:"ip_address,omitempty"`
+			Active    bool   `json:"active,omitempty"`
+		} `json:"ipv4,omitempty"`
+	} `json:"floating_ip",omitempty"`
 }

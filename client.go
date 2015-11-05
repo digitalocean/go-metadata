@@ -174,6 +174,20 @@ func (c *Client) Nameservers() ([]string, error) {
 	return ns, err
 }
 
+// FloatingIPv4Active returns true if an IPv4 Floating IP
+// Address is assigned to the Droplet.
+func (c *Client) FloatingIPv4Active() (bool, error) {
+	var active bool
+	err := c.doGet("floating_ip/ipv4/active", func(r io.Reader) error {
+		activeraw, err := ioutil.ReadAll(r)
+		if string(activeraw) == "true" {
+			active = true
+		}
+		return err
+	})
+	return active, err
+}
+
 func (c *Client) doGet(resource string, decoder func(r io.Reader) error) error {
 	return c.doGetURL(c.resolve(defaultPath, resource), decoder)
 }
