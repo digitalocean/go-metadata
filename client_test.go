@@ -95,6 +95,23 @@ func TestRegion(t *testing.T) {
 	})
 }
 
+func TestAuthToken(t *testing.T) {
+	var (
+		resp = "abcdef12345678#abcdef12345678#abcdef12345678#abcdef12345"
+		want = "abcdef12345678#abcdef12345678#abcdef12345678#abcdef12345"
+	)
+	withServer(t, "/metadata/v1/auth-token", resp, func(client *Client) {
+		got, err := client.AuthToken()
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !reflect.DeepEqual(want, got) {
+			t.Errorf("want=%#v", want)
+			t.Errorf(" got=%#v", got)
+		}
+	})
+}
+
 func TestPublicKeys(t *testing.T) {
 	var (
 		resp = "ssh-rsa sshkeysshkeysshkey1 user@workstation2\nssh-rsa sshkeysshkeysshkey2 user@workstation2"
