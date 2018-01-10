@@ -1,6 +1,6 @@
-# metadata
+# metadata [![Documentation](https://godoc.org/github.com/digitalocean/go-metadata?status.svg)](https://godoc.org/github.com/digitalocean/go-metadata)
 
-A Go client to interact with the DigitalOcean Metadata API.
+A Go client to interact with the [DigitalOcean Metadata API](https://developers.digitalocean.com/documentation/metadata/).
 
 # Usage
 
