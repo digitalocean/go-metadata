@@ -7,6 +7,7 @@ type Metadata struct {
 	VendorData string   `json:"vendor_data,omitempty"`
 	PublicKeys []string `json:"public_keys,omitempty"`
 	Region     string   `json:"region,omitempty"`
+	Tags       []string `json:"tags,omitempty"`
 
 	DNS struct {
 		Nameservers []string `json:"nameservers,omitempty"`

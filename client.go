@@ -174,6 +174,20 @@ func (c *Client) Nameservers() ([]string, error) {
 	return ns, err
 }
 
+// Tags returns a list of DigitalOcean tags that have been
+// applied to the Droplet.
+func (c *Client) Tags() ([]string, error) {
+	var ns []string
+	err := c.doGet("tags", func(r io.Reader) error {
+		scan := bufio.NewScanner(r)
+		for scan.Scan() {
+			ns = append(ns, scan.Text())
+		}
+		return scan.Err()
+	})
+	return ns, err
+}
+
 // FloatingIPv4Active returns true if an IPv4 Floating IP
 // Address is assigned to the Droplet.
 func (c *Client) FloatingIPv4Active() (bool, error) {
