@@ -146,6 +146,23 @@ func TestNameservers(t *testing.T) {
 	})
 }
 
+func TestTags(t *testing.T) {
+	var (
+		resp = "foo\nbar"
+		want = []string{"foo", "bar"}
+	)
+	withServer(t, "/metadata/v1/tags", resp, func(client *Client) {
+		got, err := client.Tags()
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !reflect.DeepEqual(want, got) {
+			t.Errorf("want=%#v", want)
+			t.Errorf(" got=%#v", got)
+		}
+	})
+}
+
 func TestFloatingIPv4Active(t *testing.T) {
 	tests := []struct {
 		resp string
