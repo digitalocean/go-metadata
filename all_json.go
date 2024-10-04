@@ -49,4 +49,9 @@ type Metadata struct {
 			Active    bool   `json:"active,omitempty"`
 		} `json:"ipv4,omitempty"`
 	} `json:"reserved_ip,omitempty"`
+
+	Features struct {
+		DHCPEnabled       bool `json:"dhcp_enabled,omitempty"`
+		VPCPeeringEnabled bool `json:"vpc_peering_enabled,omitempty"`
+	} `json:"features"`
 }
